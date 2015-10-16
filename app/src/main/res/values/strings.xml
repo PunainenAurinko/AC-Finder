@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Algonquin College Finder</string>
+
+    <string name="jazan">Algonquin College (Jazan)</string>
+    <string name="pembroke">Algonquin College (Pembroke)</string>
+    <string name="perth">Algonquin College (Perth)</string>
+    <string name="woodroffe">Algonquin College (Woodroffe)</string>
+
+
+    <string name="title_activity_maps">AC Finder</string>
+
+
+
+</resources>
