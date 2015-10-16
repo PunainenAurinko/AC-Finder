@@ -4,6 +4,11 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -17,7 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * Pin each campus of Algonquin College on a Google map.
  *
  * @author Vladimir V. Tonkonogov (tonk0006)
- * @version 1.0
+ * @version 2.0
  *
  */
 
@@ -49,6 +54,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        final EditText userLocation = (EditText) findViewById(R.id.userLocation);
+
+        // register an anonymous inner class as the event handler for the userLocation
+        userLocation.setOnEditorActionListener( new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_NULL && event.getAction( ) == KeyEvent.ACTION_DOWN && event.getKeyCode( ) == KeyEvent.KEYCODE_ENTER) {
+                    String newLocation = userLocation.getText().toString();
+                    if ( newLocation.isEmpty() ) {
+                        userLocation.setError("Location field cannot be empty");
+                        userLocation.requestFocus();
+                        return true;
+                    } else {
+                        MapsActivity.this.pin(newLocation);
+                        userLocation.setText("");
+                    }
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
     }
 
 
